@@ -16,8 +16,11 @@ public class MyVector {
 		this(10);
 	}
 	
-	public synchronized int size() {
-		return elementCount;
+	public int size() {
+		//return elementCount;
+		synchronized (this) {
+			return elementCount;
+		}
 	}
 	
 	public boolean isEmpty() {
@@ -37,13 +40,19 @@ public class MyVector {
 		return -1;
 	}
 	
-	public synchronized Object elementAt(int index) {
-		return elementData[index];
+	public Object elementAt(int index) {
+		//return elementData[index];
+		synchronized (this) {
+			return elementData[index];
+		}
 	}
 	
-	public synchronized void addElement(Object obj) {
-		ensureCapacityHelper(elementCount + 1);
-		elementData[elementCount++] = obj;
+	public void addElement(Object obj) {
+		synchronized (this) {
+			ensureCapacityHelper(elementCount + 1);
+			elementData[elementCount++] = obj;	
+		}
+		
 	}
 	
 	public void ensureCapacityHelper(int minCapacity) {
